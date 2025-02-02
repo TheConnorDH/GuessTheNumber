@@ -3,16 +3,17 @@
 # Import necessary packages
 import random
 
-# Global variables
+# Global variables.
 NUM_MIN = 1
 NUM_MAX = 10
 
 
-# Generate the random number
+# Generates the random number.
 def get_random_number():
     return random.randint(NUM_MIN, NUM_MAX)
 
 
+# Returns an error if guess is not a number.
 def get_valid_guess(prompt):
     while True:
         try:
@@ -21,11 +22,13 @@ def get_valid_guess(prompt):
             print("Input must be a number.")
 
 
+# First guess.
 def first_guess():
     guess = get_valid_guess(f"Guess a number between {NUM_MIN} and {NUM_MAX}: ")
     return guess
 
 
+# Guess result. Repeats until number is guessed.
 def guess_result(random_number, guess):
     while True:
         if guess == random_number:
@@ -37,13 +40,13 @@ def guess_result(random_number, guess):
             guess = get_valid_guess("Too high. Try again: ")
 
 
-# Main function
+# Main function.
 def main():
     random_number = get_random_number()
     guess = first_guess()
     guess_result(random_number, guess)
 
 
-# Script to run
+# Run script.
 if __name__ == "__main__":
     main()
