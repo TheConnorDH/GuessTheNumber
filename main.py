@@ -13,13 +13,37 @@ def get_random_number():
     return random.randint(NUM_MIN, NUM_MAX)
 
 
+def get_valid_guess(prompt):
+    while True:
+        try:
+            return int(input(prompt))
+        except ValueError:
+            print("Input must be a number.")
+
+
 # Main function
 def main():
     random_number = get_random_number()
 
-    print(f"Guess a number between {NUM_MIN} and {NUM_MAX}.")
-    print(random_number)
+    try:
+        guess = int(input(f"Guess a number between {NUM_MIN} and {NUM_MAX}: "))
+    except:
+        guess = int(
+            input(
+                f"Guess must be a number. Guess a number between {NUM_MIN} and {NUM_MAX}: "
+            )
+        )
+
+    while True:
+        if guess == random_number:
+            print(f"You win! The number was {random_number}")
+            break
+        elif guess < random_number:
+            guess = get_valid_guess("Too low. Try again: ")
+        elif guess > random_number:
+            guess = get_valid_guess("Too high. Try again: ")
 
 
 # Script to run
-main()
+if __name__ == "__main__":
+    main()
