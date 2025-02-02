@@ -1,52 +1,71 @@
-# Guess a number game
-
-# Import necessary packages
 import random
 
-# Global variables.
-NUM_MIN = 1
-NUM_MAX = 10
+MINIMUM_NUMBER = 1
+MAXIMUM_NUMBER = 10
 
 
-# Generates the random number.
 def get_random_number():
-    return random.randint(NUM_MIN, NUM_MAX)
+    return random.randint(MINIMUM_NUMBER, MAXIMUM_NUMBER)
 
 
-# Returns an error if guess is not a number.
 def get_valid_guess(prompt):
     while True:
         try:
-            return int(input(prompt))
+            response = int(input(prompt))
         except ValueError:
             print("Input must be a number.")
+            continue
+        if response in range(MINIMUM_NUMBER, MAXIMUM_NUMBER + 1):
+            return response
+        else:
+            print(
+                f"Please enter a number between {MINIMUM_NUMBER} and {MAXIMUM_NUMBER}."
+            )
 
 
-# First guess.
+def get_valid_replay(prompt):
+    while True:
+        response = input(prompt).lower().strip()
+        if response in ("y", "yes", "n", "no"):
+            return response
+        else:
+            print("Invalid response.")
+
+
 def first_guess():
-    guess = get_valid_guess(f"Guess a number between {NUM_MIN} and {NUM_MAX}: ")
+    guess = get_valid_guess(
+        f"Guess a number between {MINIMUM_NUMBER} and {MAXIMUM_NUMBER}: "
+    )
     return guess
 
 
-# Guess result. Repeats until number is guessed.
 def guess_result(random_number, guess):
+    guess_count = 1
     while True:
         if guess == random_number:
-            print(f"You win! The number was {random_number}.")
+            print(
+                f"You win! The number was {random_number}. It took you {guess_count} guesses."
+            )
             break
         elif guess < random_number:
             guess = get_valid_guess("Too low. Try again: ")
+            guess_count += 1
         elif guess > random_number:
             guess = get_valid_guess("Too high. Try again: ")
+            guess_count += 1
+    return False
 
 
-# Main function.
 def main():
-    random_number = get_random_number()
-    guess = first_guess()
-    guess_result(random_number, guess)
+    while True:
+        random_number = get_random_number()
+        guess = first_guess()
+        guess_result(random_number, guess)
+        replay = get_valid_replay("Would you like to play again? (Yes or No): ")
+        if replay in ("n", "no"):
+            break
+    print("Thanks for playing!")
 
 
-# Run script.
 if __name__ == "__main__":
     main()
