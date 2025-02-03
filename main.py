@@ -60,6 +60,32 @@ def get_random_number(minimum_number, maximum_number):
     return random.randint(minimum_number, maximum_number)
 
 
+def get_guess(prompt, minimum_number, maximum_number):
+    """
+    Prompt the user to input a guess and validate that it is an integer within the allowed range.
+
+    Args:
+        prompt (str): The message displayed to the user when asking for input.
+        minimum_number (int): The minimum value for the random number, inputted by the user.
+        maximum_number (int): The minimum value for the random number, inputted by the user.
+
+    Returns:
+        int: A valid guess provided by the user.
+    """
+    while True:
+        try:
+            response = int(input(prompt))
+        except ValueError:
+            print("Input must be a number.")
+            continue
+        if response in range(minimum_number, maximum_number + 1):
+            return response
+        else:
+            print(
+                f"Please enter a number between {minimum_number} and {maximum_number}."
+            )
+
+
 def get_guess_feedback(guess, random_number, minimum_number, maximum_number):
     """
     Return a string indicating how far the user's guess is from the random number.
@@ -99,32 +125,6 @@ def get_guess_feedback(guess, random_number, minimum_number, maximum_number):
             return "You're not very close. Your guess is too high."
         else:
             return "You're way off. Your guess is too high."
-
-
-def get_guess(prompt, minimum_number, maximum_number):
-    """
-    Prompt the user to input a guess and validate that it is an integer within the allowed range.
-
-    Args:
-        prompt (str): The message displayed to the user when asking for input.
-        minimum_number (int): The minimum value for the random number, inputted by the user.
-        maximum_number (int): The minimum value for the random number, inputted by the user.
-
-    Returns:
-        int: A valid guess provided by the user.
-    """
-    while True:
-        try:
-            response = int(input(prompt))
-        except ValueError:
-            print("Input must be a number.")
-            continue
-        if response in range(minimum_number, maximum_number + 1):
-            return response
-        else:
-            print(
-                f"Please enter a number between {minimum_number} and {maximum_number}."
-            )
 
 
 def guess_result(random_number, guess, minimum_number, maximum_number):
